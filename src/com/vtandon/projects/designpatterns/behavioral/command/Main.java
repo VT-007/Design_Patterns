@@ -1,20 +1,26 @@
 package com.vtandon.projects.designpatterns.behavioral.command;
 
-import com.vtandon.projects.designpatterns.behavioral.command.concreteCommand.ActionListenerCommand;
-import com.vtandon.projects.designpatterns.behavioral.command.concreteCommand.Command1;
-import com.vtandon.projects.designpatterns.behavioral.command.concreteCommand.Command2;
-import com.vtandon.projects.designpatterns.behavioral.command.invoker.Invoker1;
-import com.vtandon.projects.designpatterns.behavioral.command.receiver.Receiver1;
+import com.vtandon.projects.designpatterns.behavioral.command.Command.*;
+import com.vtandon.projects.designpatterns.behavioral.command.invoker.PhilipsInvoker;
+import com.vtandon.projects.designpatterns.behavioral.command.receiver.PhilipsFan;
+import com.vtandon.projects.designpatterns.behavioral.command.receiver.PhilipsLight;
 
 public class Main {
+    // here Main class is working as an Invoker
     public static void main(String[] args) {
-        Receiver1 receiver1 = new Receiver1();
 
-        ActionListenerCommand clickOpen = new Command1(receiver1);
-        ActionListenerCommand clickClose = new Command2(receiver1);
+        ICommand philipsFanSwitchOnCommand = new PhilipsFanOnCommand(new PhilipsFan());
+        ICommand philipsFanSwitchOffCommand = new PhilipsFanOffCommand(new PhilipsFan());
+        ICommand philipsLightSwitchOnCommand = new PhilipsLightOnCommand(new PhilipsLight());
+        ICommand philipsLightSwitchOffCommand = new PhilipsLightOffCommand(new PhilipsLight());
 
-        Invoker1 invokerObj = new Invoker1(clickOpen, clickClose);
-        invokerObj.triggerOpen();
-        invokerObj.triggerCloe();
+        PhilipsInvoker philipsInvoker = new PhilipsInvoker(philipsFanSwitchOnCommand, philipsFanSwitchOffCommand);
+        philipsInvoker.executeCommand(philipsFanSwitchOnCommand);
+        philipsInvoker.executeCommand(philipsFanSwitchOffCommand);
+
+        PhilipsInvoker philipsInvoker1 = new PhilipsInvoker(philipsLightSwitchOnCommand, philipsLightSwitchOffCommand);
+        philipsInvoker1.executeCommand(philipsLightSwitchOnCommand);
+        philipsInvoker1.executeCommand(philipsLightSwitchOffCommand);
+
     }
 }
